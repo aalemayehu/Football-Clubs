@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .form{
+            display:inline-block;
+            margin: 100px;
+            background-color:lightblue;
+            border-radius: 5px;
+            padding:5px;
+            border:solid black;
+        }
+        .messages{
+            color: brown;
+        }
+        .container{
+            min-width: 700px;
+            min-height: 700px;
+            background-color: rgb(34, 93, 180);
+        }
+    </style>
+    <title>Login Registration</title>
+</head>
+<body>
+    <div class="container">
+        <ul class="messages">
+        {% if messages %}
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        {% endif %}
+        </ul>
+        <div class = "form">
+            <h1>Welcome!!</h1>
+            <h3>Register</h3>
+            <form action="/register" method="post">
+                    {% csrf_token %}
+                <div>
+                    <label for="fname">First Name:</label><br>
+                    <input type="text" name="fname" id="">
+                </div>
+                <div>
+                    <label for="lname">Last Name:</label><br>
+                    <input type="text" name="lname" id="">
+                </div>
+                <div>
+                    <label for="email">Email:</label><br>
+                    <input type="text" name="email" id="">
+                </div>
+                <div>
+                    <label for="password">Password:</label><br>
+                    <input type="password" name="password" id="">
+                </div>
+                <div>
+                    <input type="submit" value="Register" id="">
+                </div>
+
+            </form>
+            
+        </div>
+        <div class = "form">
+            <h2> Please Login</h2>
+            <form action="/login" method="post">
+                    {% csrf_token %}
+                <div>
+                    <label for="email">Email:</label><br>
+                    <input type="text" name="email" id="">
+                </div>
+                <div>
+                    <label for="password">Password:</label><br>
+                    <input type="password" name="password" id="">
+                </div>
+                <div>
+                    <input type="submit" value="LogIn" id="">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

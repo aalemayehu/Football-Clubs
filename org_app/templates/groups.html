@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Team Wall</title>
+</head>
+<style>
+    .Orgs{
+        border:solid black;
+        width: 200px;
+        background-color:lightblue;
+        color:brown;
+        border-radius: 5px;
+    }
+    .messages{
+        color:brown;
+    }
+    .maincontainer{
+        display:inline-block;
+    }
+    .newOrg{
+        display: inline-block;
+        vertical-align: 120px;
+        margin-left: 250px;
+    }
+    .Container{
+        min-width: 700px;
+        min-height: 700px;
+        background-color:rgb(140, 140, 204);
+        color:black;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
+    .name{
+        height:50px;
+        width: 250px;
+        border-radius: 5px;
+    }
+    .description{
+        height:150px;
+        width:250px;
+        border-radius: 5px;
+    }
+</style>
+<body>
+    <div class="Container">
+        <ul class="messages">
+            {% if messages %}
+            {% for message in messages %}
+        <li>{{ message }}</li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+        <div class="maincontainer" >
+            <a  href="/logout"><button>logout</button></a><br>
+            <h1>Welcome {{loggedinuser.first_name}}! </h1>
+            <h2>Fan Clubs you may join</h2>
+                <div>
+                    {% for group in all_groups %}
+                        <div class="Orgs">
+                            <a id="group" href="/groups/{{group.id}}">{{group.name}}</a>
+                            <p>Members:{{group.joiners.count}}</p>
+                            <p>Description:{{group.description}}</p>
+                            {% if loggedinuser == group.creator %}
+                            <a href="/delete/{{group.id}}">Delete</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}  
+                </div>
+        </div>
+        <div class="newOrg">
+            <form action="/addgroups" method="post">
+                {% csrf_token %}
+                <h3>Create a New Club:</h3>
+                    <div>
+                        <label  for="name">Club Name</label><br>
+                        <input class="name" type="text" name="name" id="">
+                    </div>
+                    <div>
+                        <label  for="message">Description:</label><br>
+                        <textarea class="description"  type="text" name="description" id=""></textarea>
+                    </div>
+                    <div>
+                        <input type="submit" value="Create" id="">
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
